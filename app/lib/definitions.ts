@@ -1,7 +1,7 @@
-// This file contains type definitions for your data.
-// It describes the shape of the data, and what data type each property should accept.
-// For simplicity of teaching, we're manually defining these types.
-// However, these types are generated automatically if you're using an ORM such as Prisma.
+// 此文件包含你的数据类型定义。
+// 它描述了数据的形状，以及每个属性应该接受什么数据类型。
+// 为了教学简单，我们手动定义这些类型。
+// 但是，如果你使用 ORM（如 Prisma），这些类型会自动生成。
 export type User = {
   id: string;
   name: string;
@@ -21,8 +21,8 @@ export type Invoice = {
   customer_id: string;
   amount: number;
   date: string;
-  // In TypeScript, this is called a string union type.
-  // It means that the "status" property can only be one of the two strings: 'pending' or 'paid'.
+  // 在 TypeScript 中，这被称为字符串联合类型。
+  // 这意味着 "status" 属性只能是两个字符串之一：'pending' 或 'paid'。
   status: 'pending' | 'paid';
 };
 
@@ -39,7 +39,7 @@ export type LatestInvoice = {
   amount: string;
 };
 
-// The database returns a number for amount, but we later format it to a string with the formatCurrency function
+// 数据库返回的金额是数字，但我们稍后使用 formatCurrency 函数将其格式化为字符串
 export type LatestInvoiceRaw = Omit<LatestInvoice, 'amount'> & {
   amount: number;
 };

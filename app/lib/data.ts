@@ -13,15 +13,15 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 export async function fetchRevenue() {
   try {
-    // Artificially delay a response for demo purposes.
-    // Don't do this in production :)
+    // 为了演示目的人为延迟响应。
+    // 不要在生产环境中这样做 :)
 
-    // console.log('Fetching revenue data...');
+    // console.log('正在获取收入数据...');
     // await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql<Revenue[]>`SELECT * FROM revenue`;
 
-    // console.log('Data fetch completed after 3 seconds.');
+    // console.log('数据获取在3秒后完成。');
 
     return data;
   } catch (error) {
@@ -52,9 +52,9 @@ export async function fetchLatestInvoices() {
 
 export async function fetchCardData() {
   try {
-    // You can probably combine these into a single SQL query
-    // However, we are intentionally splitting them to demonstrate
-    // how to initialize multiple queries in parallel with JS.
+    // 你可能可以将这些合并为单个 SQL 查询
+    // 但是，我们故意将它们分开以演示
+    // 如何使用 JS 并行初始化多个查询。
     const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
     const invoiceStatusPromise = sql`SELECT
@@ -156,7 +156,7 @@ export async function fetchInvoiceById(id: string) {
 
     const invoice = data.map((invoice) => ({
       ...invoice,
-      // Convert amount from cents to dollars
+      // 将金额从分转换为元
       amount: invoice.amount / 100,
     }));
 
