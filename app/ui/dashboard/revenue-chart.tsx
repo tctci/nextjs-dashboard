@@ -2,26 +2,21 @@ import { generateYAxis } from '@/app/lib/utils';
 import { CalendarIcon } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
 import { Revenue } from '@/app/lib/definitions';
-
+import { fetchRevenue } from '@/app/lib/data';
 // 此组件仅用于展示。
 // 如需数据可视化 UI，请查看：
 // https://www.tremor.so/
 // https://www.chartjs.org/
 // https://airbnb.io/visx/
 
-export default async function RevenueChart({
-  revenue,
-}: {
-  revenue: Revenue[];
-}) {
+export default async function RevenueChart() {
   const chartHeight = 350;
-  // 注意：在第7章中取消注释此代码
+  const revenue = await fetchRevenue(); 
+  const { yAxisLabels, topLabel } = generateYAxis(revenue);
 
-  // const { yAxisLabels, topLabel } = generateYAxis(revenue);
-
-  // if (!revenue || revenue.length === 0) {
-  //   return <p className="mt-4 text-gray-400">暂无数据。</p>;
-  // }
+  if (!revenue || revenue.length === 0) {
+    return <p className="mt-4 text-gray-400">暂无数据。</p>;
+  }
 
   return (
     <div className="w-full md:col-span-4">
@@ -30,7 +25,7 @@ export default async function RevenueChart({
       </h2>
       {/* 注意：在第7章中取消注释此代码 */}
 
-      {/* <div className="rounded-xl bg-gray-50 p-4">
+      <div className="rounded-xl bg-gray-50 p-4">
         <div className="sm:grid-cols-13 mt-0 grid grid-cols-12 items-end gap-2 rounded-md bg-white p-4 md:gap-4">
           <div
             className="mb-6 hidden flex-col justify-between text-sm text-gray-400 sm:flex"
@@ -59,7 +54,7 @@ export default async function RevenueChart({
           <CalendarIcon className="h-5 w-5 text-gray-500" />
           <h3 className="ml-2 text-sm text-gray-500 ">最近12个月</h3>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

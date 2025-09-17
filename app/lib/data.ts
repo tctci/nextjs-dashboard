@@ -16,12 +16,12 @@ export async function fetchRevenue() {
     // 为了演示目的人为延迟响应。
     // 不要在生产环境中这样做 :)
 
-    // console.log('正在获取收入数据...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    console.log('正在获取收入数据...');
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql<Revenue[]>`SELECT * FROM revenue`;
 
-    // console.log('数据获取在3秒后完成。');
+    console.log('数据获取在3秒后完成。');
 
     return data;
   } catch (error) {
@@ -85,12 +85,14 @@ export async function fetchCardData() {
   }
 }
 
-const ITEMS_PER_PAGE = 6;
+const DEFAULT_ITEMS_PER_PAGE = 10;
 export async function fetchFilteredInvoices(
   query: string,
   currentPage: number,
+  size?: string
 ) {
-  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  const ITEMS_PER_PAGE = Number(size) ?? DEFAULT_ITEMS_PER_PAGE
+  const offset = (currentPage - 1) * (ITEMS_PER_PAGE);
 
   try {
     const invoices = await sql<InvoicesTable[]>`
@@ -121,7 +123,8 @@ export async function fetchFilteredInvoices(
   }
 }
 
-export async function fetchInvoicesPages(query: string) {
+export async function fetchInvoicesPages(query: string,size:string) {
+  const ITEMS_PER_PAGE = Number(size) ?? DEFAULT_ITEMS_PER_PAGE
   try {
     const data = await sql`SELECT COUNT(*)
     FROM invoices

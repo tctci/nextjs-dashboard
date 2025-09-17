@@ -4,17 +4,32 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { generatePagination } from '@/app/lib/utils';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Pagination({ totalPages }: { totalPages: number }) {
   // 注意：在第11章中取消注释此代码
-
-  // const allPages = generatePagination(currentPage, totalPages);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const [size, setSize] = useState(searchParams.get('size') || '5');
+  const allPages = generatePagination(currentPage, totalPages);
+  const createPageURL = (pageNumber: number | string, pageSize?: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', pageNumber.toString());
+    if (pageSize) {
+      params.set('size', pageSize);
+    } else {
+      params.set('size', size);
+    }
+    
+    return `${pathname}?${params.toString()}`;
+  };
 
   return (
     <>
-      {/*  注意：在第11章中取消注释此代码 */}
-
-      {/* <div className="inline-flex">
+      <div className="inline-flex">
         <PaginationArrow
           direction="left"
           href={createPageURL(currentPage - 1)}
@@ -47,7 +62,26 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
           href={createPageURL(currentPage + 1)}
           isDisabled={currentPage >= totalPages}
         />
-      </div> */}
+
+        <select 
+          value={size}
+          onChange={(e) => {
+            const newSize = e.target.value;
+            setSize(newSize);
+            router.push(createPageURL(1, newSize));
+          }}
+          className="ml-4 rounded-md border border-gray-300 py-1 text-sm"
+        >
+          <>
+           {
+            [5,15,25].map((i)=>{
+              return <option value={i}>{i}</option>
+            })
+           }
+          </>
+         
+        </select>
+      </div>
     </>
   );
 }
