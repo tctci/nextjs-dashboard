@@ -85,13 +85,13 @@ export async function fetchCardData() {
   }
 }
 
-const DEFAULT_ITEMS_PER_PAGE = 10;
+export const DEFAULT_ITEMS_PER_PAGE = 5;
 export async function fetchFilteredInvoices(
   query: string,
   currentPage: number,
   size?: string
 ) {
-  const ITEMS_PER_PAGE = Number(size) ?? DEFAULT_ITEMS_PER_PAGE
+  const ITEMS_PER_PAGE = (size && size!== '0') ? Number(size) : DEFAULT_ITEMS_PER_PAGE
   const offset = (currentPage - 1) * (ITEMS_PER_PAGE);
 
   try {
@@ -124,7 +124,7 @@ export async function fetchFilteredInvoices(
 }
 
 export async function fetchInvoicesPages(query: string,size:string) {
-  const ITEMS_PER_PAGE = Number(size) ?? DEFAULT_ITEMS_PER_PAGE
+  const ITEMS_PER_PAGE = (size && size!== '0') ? Number(size) : DEFAULT_ITEMS_PER_PAGE
   try {
     const data = await sql`SELECT COUNT(*)
     FROM invoices

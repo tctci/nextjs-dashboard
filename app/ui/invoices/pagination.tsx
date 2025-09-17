@@ -7,6 +7,7 @@ import { generatePagination } from '@/app/lib/utils';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+export const DEFAULT_ITEMS_PER_PAGE = '5';
 export default function Pagination({ totalPages }: { totalPages: number }) {
   // 注意：在第11章中取消注释此代码
   const pathname = usePathname();
@@ -75,7 +76,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
           <>
            {
             [5,15,25].map((i)=>{
-              return <option value={i}>{i}</option>
+              return <option value={i} key={i} >{i}</option>
             })
            }
           </>
