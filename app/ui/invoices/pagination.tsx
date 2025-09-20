@@ -71,7 +71,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
             setSize(newSize);
             router.push(createPageURL(1, newSize));
           }}
-          className="ml-4 rounded-md border border-gray-300 py-1 text-sm"
+          className="ml-4"
         >
           <>
            {
