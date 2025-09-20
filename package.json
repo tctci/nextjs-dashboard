@@ -4,7 +4,11 @@
     "build": "next build",
     "dev": "next dev --turbopack -H 0.0.0.0 -p 3000",
     "dev:local": "next dev --turbopack -H dashboard.local -p 3000",
-    "start": "next start"
+    "start": "next start",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -28,7 +32,8 @@
     "@types/bcrypt": "^5.0.2",
     "@types/node": "22.10.7",
     "@types/react": "19.0.7",
-    "@types/react-dom": "19.0.3"
+    "@types/react-dom": "19.0.3",
+    "prettier": "^3.2.5"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
